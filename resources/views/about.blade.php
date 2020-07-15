@@ -1,5 +1,17 @@
 @extends('layouts.app')
 
+@section('title', 'About')
+
+@section('head')
+  <style>
+    body {
+      background: red;
+    }
+  </style>
+@endsection
+
 @section('content')
-  About
+  <div class="container">
+    About
+  </div>
 @endsection

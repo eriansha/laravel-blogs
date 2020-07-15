@@ -4,18 +4,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Home</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <style>
-          body {
-            background: orange;
-          }
-        </style>
+        <title>@yield('title')</title>
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      @yield('head')
     </head>
     <body>
         @include('layouts.navigation')
-        @yield('content')
+        <div class="py-4">
+          @yield('content')
+        </div>
     </body>
 </html>
