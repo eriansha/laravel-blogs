@@ -5,5 +5,6 @@
 @section('content')
   <div class="container">
     Home
+    Halo {{ $name }}
   </div>
 @endsection
