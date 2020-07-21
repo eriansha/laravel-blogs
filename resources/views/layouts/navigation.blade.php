@@ -10,13 +10,16 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item {{ request()->is('about') ? 'active' : '' }}">
-        <a class="nav-link" href="about">About</a>
+        <a class="nav-link" href="/about">About</a>
       </li>
       <li class="nav-item {{ request()->is('contact') ? 'active' : '' }}">
-        <a class="nav-link" href="contact">Contact</a>
+        <a class="nav-link" href="/contact">Contact</a>
       </li>
       <li class="nav-item {{ request()->is('login') ? 'active' : '' }}">
-        <a class="nav-link" href="login">Login</a>
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+      <li class="nav-item {{ request()->is('login') ? 'active' : '' }}">
+        <a class="nav-link" href="/posts">Posts</a>
       </li>
   </div>
 </nav>

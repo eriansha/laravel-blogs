@@ -2,12 +2,19 @@
 
 @section('content')
   <div class="container">
-    <div class="row">
-      <div class="col-md-6">
+    <div class="d-flex justify-content-between">
+      <div>
         <h4>All Post</h4>
-  
-        @foreach ($posts as $post)
-          <div class="card mb-3">
+        <hr>
+      </div>
+      <div>
+        <a href="/posts/create" class="btn btn-primary">New Post</a>
+      </div>
+    </div>
+    <div class="row">
+      @forelse ($posts as $post)
+        <div class="col-md-4">
+          <div class="card mb-4">
             <div class="card-header">
               {{ $post->title }}
             </div>
@@ -18,11 +25,21 @@
               
               <a href="/posts/{{ $post->slug }}">Read more</a>
             </div>
+            <div class="card-footer">
+              Published on {{ $post->created_at->diffForHumans() }}
+            </div>
           </div>
-          <div class="card-footer">
-            Published on {{ $post->created_at->diffForHumans() }}
+        </div>
+      @empty
+        <div class="col-md-6">
+          <div class="alert alert-info">
+            There are no posts
           </div>
-        @endforeach
+        </div>
+      @endforelse
+    </div>
+    <div class="d-flex justify-content-center">
+      <div>
         {{ $posts->links() }}
       </div>
     </div>
