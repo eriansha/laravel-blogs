@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $fillable = ['title', 'slug', 'body'];
+
     public function scopeLatestFirst()
     {
       return $this->latest()->first();

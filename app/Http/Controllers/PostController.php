@@ -24,13 +24,18 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $post = new Post;
-        $post->title = $request->title;
-        $post->slug = Str::slug($request->title);
-        $post->body = $request->body;
-        $post->save();
+        // validate the fields
+        $params = request()->validate([
+            'title' => 'required|min:3',
+            'body' => 'required'
+        ]);
+
+        // add title to the slug
+        $params['slug'] = Str::slug(request('title'));
+        // create new post
+        Post::create($params);
 
         return back();
     }
