@@ -11,6 +11,7 @@
     <body>
         @include('layouts.navigation')
         <div class="py-4">
+          @include('alert')
           @yield('content')
         </div>
     </body>
