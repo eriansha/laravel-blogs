@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Http\Requests\PostRequest;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -21,16 +21,12 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        return view('posts.create', ['post' => new Post()]);
     }
 
-    public function store()
+    public function store(PostRequest $request)
     {
-        // validate the fields
-        $params = request()->validate([
-            'title' => 'required|min:3',
-            'body' => 'required'
-        ]);
+        $params = $request->all();
 
         // add title to the slug
         $params['slug'] = Str::slug(request('title'));
@@ -47,14 +43,10 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Post $post)
-    {
-        // validate the fields
-        $params = request()->validate([
-            'title' => 'required|min:3',
-            'body' => 'required'
-        ]);
-            
+    public function update(PostRequest $request, Post $post)
+    {            
+        $params = $request->all();
+
         // create new post
         $post->update($params);
         
