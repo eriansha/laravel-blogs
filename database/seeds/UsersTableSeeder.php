@@ -16,14 +16,14 @@ class UsersTableSeeder extends Seeder
             'name' => 'Ivan Putra Eriansya',
             'email' => 'putra.ivan90@gmail.com',
             'username' => 'mivanputra',
-            'password' => 'test1234'
+            'password' => bcrypt('test1234')
         ]);;
 
         User::create([
             'name' => 'Van',
             'email' => 'eriansha.van@gmail.com',
             'username' => 'vann',
-            'password' => 'vann1234'
+            'password' => bcrypt('vann1234')
         ]);;
     }
 }
