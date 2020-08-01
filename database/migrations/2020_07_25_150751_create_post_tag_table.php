@@ -18,7 +18,7 @@ class CreatePostTagTable extends Migration
             $table->foreignId('tag_id')->constrained('tags');
             $table->primary(['post_id', 'tag_id']);
 
-            // OPTIONAL if we don't use constrained()
+            // OPTIONAL if we don't use constrained() and use different name id
             // $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             // $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
         });
