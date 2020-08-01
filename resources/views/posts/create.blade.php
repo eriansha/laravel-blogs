@@ -9,7 +9,7 @@
           New Post
         </div>
         <div class="card-body">
-          <form action="/posts/store" method="post">
+          <form action="/posts/store" method="post" autocomplete="off" enctype="multipart/form-data">
             @csrf
             @include('posts.partials.form-control', ['submit' => 'Create'])
           </form>

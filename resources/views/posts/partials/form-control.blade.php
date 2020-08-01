@@ -1,4 +1,12 @@
 <div class="form-group">
+  <div class="form-group">
+    <input type="file" name="thumbnail" id="thumbnail">
+    @error('thumbnail')
+    <div class="mt-2 text-danger">
+      {{ $message }} 
+    </div> 
+  @enderror
+  </div>
   <label for="title">Title</label>
   <input type="text" name="title" value="{{ old('title') ?? $post->title }}" id="title" class="form-control">
   @error('title')

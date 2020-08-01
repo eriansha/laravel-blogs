@@ -30,11 +30,19 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        $params = $request->all();
+        $request->validate([
+            'thumbnail' => 'image|mimes:jpeg,png,svg,jpg|max:2048'
+        ]);
 
-        // add title to the slug
-        $params['slug'] = Str::slug(request('title'));
+        $params = $request->all();
+        $slug = Str::slug(request('title'));
+
+        $thumbnail = request()->file('thumbnail') ? request()->file('thumbnail')->store('images/posts') : null;
+
+        // add fields to $params
+        $params['slug'] = $slug;
         $params['category_id'] = request('category');
+        $params['thumbnail'] = $thumbnail;
 
         // create new post
         $post = auth()->user()->posts()->create($params);
@@ -57,8 +65,26 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post)
     {            
         $this->authorize('update', $post);
+
+        $request->validate([
+            'thumbnail' => 'image|mimes:jpeg,png,svg,jpg|max:2048'
+        ]);
+
+        // delete current thumbnail if there's a new one
+        if (request()->file('thumbnail'))
+        {
+            \Storage::delete($post->thumbnail);
+            $thumbnail =  request()->file('thumbnail')->store('images/posts');
+        }
+        // set thumbnail with current thumbnail
+        else
+        {
+            $thumbnail = $post->thumbnail;
+        }
+        
         $params = $request->all();
         $params['category_id'] = request('category');
+        $params['thumbnail'] = $thumbnail;
 
         // create new post
         $post->update($params);
@@ -73,6 +99,7 @@ class PostController extends Controller
     {
         if (auth()->user()->is($post->author))
         {
+            \Storage::delete($post->thumbnail);
             $post->tags()->detach();
             $post->delete();
             session()->flash('success', 'The post was deleted');

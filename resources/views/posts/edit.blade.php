@@ -9,7 +9,7 @@
           Update Post: {{ $post->title }}
         </div>
         <div class="card-body">
-          <form action="/posts/{{ $post->slug}}/edit" method="post">
+          <form action="/posts/{{ $post->slug}}/edit" method="post" enctype="multipart/form-data">
             @method('patch')
             @csrf
             @include('posts.partials.form-control')
