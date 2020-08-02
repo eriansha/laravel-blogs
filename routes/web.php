@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('search', 'SearchController@posts')->name('search.posts');
+
 Route::prefix('posts')->middleware('auth')->group(function() {
   Route::get('create', 'PostController@create')->middleware('auth')->name('posts.create');
   Route::post('store', 'PostController@store');
