@@ -32,10 +32,6 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        $request->validate([
-            'thumbnail' => 'image|mimes:jpeg,png,svg,jpg|max:2048'
-        ]);
-
         $params = $request->all();
         $slug = Str::slug(request('title'));
 
@@ -67,10 +63,6 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post)
     {            
         $this->authorize('update', $post);
-
-        $request->validate([
-            'thumbnail' => 'image|mimes:jpeg,png,svg,jpg|max:2048'
-        ]);
 
         // delete current thumbnail if there's a new one
         if (request()->file('thumbnail'))
