@@ -13,7 +13,7 @@ class PostService
      * @param Integer $totalPage
      * @return Array
      */
-    public function getIndex($totalPage)
+    public function getPosts($totalPage)
     {
       return Post::latest()->paginate($totalPage);
     }

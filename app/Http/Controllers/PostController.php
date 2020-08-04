@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index', ['posts' => $this->postService->getIndex(6)]);
+        return view('posts.index', ['posts' => $this->postService->getPosts(6)]);
     }
     
     /**
