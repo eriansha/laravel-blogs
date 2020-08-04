@@ -3,21 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\{Post, Category, Tag};
+use App\Services\PostService;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
-    public function index()
+    /**
+     * @var postService
+     */
+    protected $postService;
+    
+    /**
+     * PostController Constructor
+     *
+     * @param PostService $postService
+     *
+     */
+    public function __construct(PostService $postService)
     {
-        return view('posts.index', [
-            'posts' => Post::latest()->paginate(6)
-        ]);
+        $this->postService = $postService;
     }
     
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('posts.index', ['posts' => $this->postService->getIndex(6)]);
+    }
+    
+    /**
+     * Show a single post and suggested other posts that have same category
+     * 
+     * @param Post $post
+     * @return \Illuminate\Http\Response
+     */
     public function show(Post $post)
     {
-        $posts = Post::where('category_id', $post->category_id)->latest()->limit(6)->get();
+        $posts = $this->postService->getByCategory($post->category_id, 6);
         return view('posts.show', compact('post', 'posts'));
     }
 
@@ -89,13 +115,18 @@ class PostController extends Controller
         return redirect('posts');
     }
 
+    /**
+     * Delete single post
+     * 
+     * @param Post $post
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Post $post)
     {
         if (auth()->user()->is($post->author))
         {
-            \Storage::delete($post->thumbnail);
-            $post->tags()->detach();
-            $post->delete();
+            $this->postService->deletePost($post);
+            
             session()->flash('success', 'The post was deleted');
             return redirect('posts');
         }
