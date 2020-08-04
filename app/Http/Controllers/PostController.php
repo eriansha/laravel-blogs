@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\{Post, Category, Tag};
 use App\Services\PostService;
 use App\Http\Requests\PostRequest;
-use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -47,6 +46,11 @@ class PostController extends Controller
         return view('posts.show', compact('post', 'posts'));
     }
 
+    /**
+     * Display create page
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         return view('posts.create', [
@@ -56,27 +60,25 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Create a post
+     * 
+     * @param PostRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(PostRequest $request)
     {
-        $params = $request->all();
-        $slug = Str::slug(request('title'));
-
-        $thumbnail = request()->file('thumbnail') ? request()->file('thumbnail')->store('images/posts') : null;
-
-        // add fields to $params
-        $params['slug'] = $slug;
-        $params['category_id'] = request('category');
-        $params['thumbnail'] = $thumbnail;
-
-        // create new post
-        $post = auth()->user()->posts()->create($params);
-        $post->tags()->attach(request('tags'));
-
+        $this->postService->createPost($request->all());
         session()->flash('success', 'The post was created');
 
         return redirect('posts');
     }
 
+    /**
+     * Display edit page
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Post $post)
     {
         return view('posts.edit', [
@@ -88,30 +90,30 @@ class PostController extends Controller
 
     public function update(PostRequest $request, Post $post)
     {            
-        $this->authorize('update', $post);
-
-        // delete current thumbnail if there's a new one
-        if (request()->file('thumbnail'))
-        {
-            \Storage::delete($post->thumbnail);
-            $thumbnail =  request()->file('thumbnail')->store('images/posts');
-        }
-        // set thumbnail with current thumbnail
-        else
-        {
-            $thumbnail = $post->thumbnail;
-        }
+        // // delete current thumbnail if there's a new one
+        // if (request()->file('thumbnail'))
+        // {
+        //     \Storage::delete($post->thumbnail);
+        //     $thumbnail =  request()->file('thumbnail')->store('images/posts');
+        // }
+        // // set thumbnail with current thumbnail
+        // else
+        // {
+        //     $thumbnail = $post->thumbnail;
+        // }
         
-        $params = $request->all();
-        $params['category_id'] = request('category');
-        $params['thumbnail'] = $thumbnail;
+        // $params = $request->all();
+        // $params['category_id'] = request('category');
+        // $params['thumbnail'] = $thumbnail;
 
-        // create new post
-        $post->update($params);
-        $post->tags()->sync(request('tags'));
+        // // create new post
+        // $post->update($params);
+        // $post->tags()->sync(request('tags'));
+
+        $this->authorize('update', $post);
+        $this->postService->editPost($post, $request->all());
         
         session()->flash('success', 'The post was updated');
-
         return redirect('posts');
     }
 
