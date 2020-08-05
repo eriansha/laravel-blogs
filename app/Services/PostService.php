@@ -38,7 +38,7 @@ class PostService
     /**
      * Create a post
      * 
-     * @param PostRequest $params
+     * @param Array $params
      * 
      * @return Post
      */
@@ -66,7 +66,7 @@ class PostService
      * Update a single post with new value.
      * If thumbnail is exists in the request, change the old one and delete it from public disk
      * 
-     * @param PostRequest $request
+     * @param Array $params
      * @param Post $post
      * 
      * @return Post
