@@ -28,4 +28,9 @@ class Post extends Model
     {
       return "/storage/" . $this->thumbnail;
     }
+
+    public function getTagIdsAttribute()
+    {
+      return $this->tags->pluck('id');
+    }
 }

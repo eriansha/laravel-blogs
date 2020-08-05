@@ -33,10 +33,7 @@
   <label for="tags">Tag</label>
   <select name="tags[]" id="tags" class="form-control select2" multiple>
     @foreach ($tags as $tag)
-      <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>
-    @endforeach
-    @foreach ($tags as $tag)
-      <option  value="{{ $tag->id }}">{{ $tag->name }}</option>
+    <option  {{ $post->tagIds->contains($tag->id) ? 'selected' : '' }} value="{{ $tag->id }}">{{ $tag->name }}</option>
     @endforeach
   </select>
   @error('tags')
