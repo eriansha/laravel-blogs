@@ -88,28 +88,16 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Update a single post with new value
+     * 
+     * @param PostRequest $request
+     * @param Post $post
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function update(PostRequest $request, Post $post)
     {            
-        // // delete current thumbnail if there's a new one
-        // if (request()->file('thumbnail'))
-        // {
-        //     \Storage::delete($post->thumbnail);
-        //     $thumbnail =  request()->file('thumbnail')->store('images/posts');
-        // }
-        // // set thumbnail with current thumbnail
-        // else
-        // {
-        //     $thumbnail = $post->thumbnail;
-        // }
-        
-        // $params = $request->all();
-        // $params['category_id'] = request('category');
-        // $params['thumbnail'] = $thumbnail;
-
-        // // create new post
-        // $post->update($params);
-        // $post->tags()->sync(request('tags'));
-
         $this->authorize('update', $post);
         $this->postService->editPost($post, $request->all());
         
