@@ -3,14 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use Illuminate\Http\Request;
+use App\Services\PostService;
 
 class SearchController extends Controller
 {
+    /**
+     * @var postService
+     */
+    protected $postService;
+    
+    /**
+     * SearchController Constructor
+     *
+     * @param PostService $postService
+     *
+     */
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+    }
+
+    /**
+     * Search posts
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function posts()
     {
         $query = request("query");
-        $posts = Post::where("title", "like", "%$query%")->latest()->paginate(10);
+        $posts = $this->postService->searchByQuery($query, 10);
         return view('posts.index', compact('posts'));
     }
 }

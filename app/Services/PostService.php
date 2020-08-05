@@ -36,6 +36,21 @@ class PostService
     }
 
     /**
+     * Search posts by query search. It will search by title only
+     * 
+     * @param String $query
+     * @param Integer $totalPage
+     * 
+     * @return Array
+     */
+    public function searchByQuery($query, $totalPage)
+    {
+      return Post::where("title", "like", "%$query%")
+                 ->latest()
+                 ->paginate($totalPage);
+    }
+
+    /**
      * Create a post
      * 
      * @param Array $params
