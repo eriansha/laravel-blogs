@@ -24,16 +24,6 @@ class Post extends Model
       return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function scopeLatestFirst()
-    {
-      return $this->latest()->first();
-    }
-
-    public function scopeLatestPost()
-    {
-      return $this->latest()->get();
-    }
-
     public function getTakeImageAttribute()
     {
       return "/storage/" . $this->thumbnail;
