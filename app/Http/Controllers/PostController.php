@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\{Post, Category, Tag};
-use App\Services\PostService;
+use App\Post;
+use App\Services\{PostService, TagService, CategoryService};
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
     /**
-     * @var postService
+     * @var PostService
      */
     protected $postService;
+
+    /**
+     * @var CategoryService
+     */
+    protected $categoryService;
+
+    /**
+     * @var TagService
+     */
+    protected $tagService;
     
     /**
      * PostController Constructor
@@ -19,9 +29,15 @@ class PostController extends Controller
      * @param PostService $postService
      *
      */
-    public function __construct(PostService $postService)
+    public function __construct(
+        PostService $postService,
+        CategoryService $categoryService,
+        TagService $tagService
+    )
     {
         $this->postService = $postService;
+        $this->categoryService = $categoryService;
+        $this->tagService = $tagService;
     }
     
     /**
@@ -55,8 +71,8 @@ class PostController extends Controller
     {
         return view('posts.create', [
             'post' => new Post(),
-            'categories' => Category::get(),
-            'tags' => Tag::get()
+            'categories' => $this->categoryService->getAll(),
+            'tags' => $this->tagService->getAll()
         ]);
     }
 
@@ -83,8 +99,8 @@ class PostController extends Controller
     {
         return view('posts.edit', [
             'post' => $post,
-            'categories' => Category::get(),
-            'tags' => Tag::get()
+            'categories' => $this->categoryService->getAll(),
+            'tags' => $this->tagService->getAll()
         ]);
     }
 

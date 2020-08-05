@@ -7,6 +7,16 @@ use App\Tag;
 class TagService
 {
     /**
+     * Get all tags
+     * 
+     * @return Array
+     */
+    public function getAll()
+    {
+      return Tag::get();
+    }
+  
+    /**
      * Get all Posts by total page
      * 
      * @param Tag $tag

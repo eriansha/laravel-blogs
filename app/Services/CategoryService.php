@@ -7,6 +7,16 @@ use App\Category;
 class CategoryService
 {
     /**
+     * Get all tags
+     * 
+     * @return Array
+     */
+    public function getAll()
+    {
+      return Category::get();
+    }
+  
+    /**
      * Get all Posts by total page
      * 
      * @param Category $category
