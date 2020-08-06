@@ -1,12 +1,14 @@
+{{-- thumbnail --}}
 <div class="form-group">
-  <div class="form-group">
-    <input type="file" name="thumbnail" id="thumbnail">
-    @error('thumbnail')
-    <div class="mt-2 text-danger">
-      {{ $message }} 
-    </div> 
-  @enderror
-  </div>
+  <input type="file" name="thumbnail" id="thumbnail">
+  @error('thumbnail')
+  <div class="mt-2 text-danger">
+    {{ $message }} 
+  </div> 
+@enderror
+</div>
+{{-- title --}}
+<div class="form-group">
   <label for="title">Title</label>
   <input type="text" name="title" value="{{ old('title') ?? $post->title }}" id="title" class="form-control">
   @error('title')
@@ -15,6 +17,7 @@
     </div> 
   @enderror
 </div>
+{{-- category --}}
 <div class="form-group">
   <label for="category">Category</label>
   <select name="category" id="title" class="form-control">
@@ -29,6 +32,7 @@
     </div> 
   @enderror
 </div>
+{{-- tag --}}
 <div class="form-group">
   <label for="tags">Tag</label>
   <select name="tags[]" id="tags" class="form-control select2" multiple>
@@ -42,6 +46,7 @@
     </div> 
   @enderror
 </div>
+{{-- body --}}
 <div class="form-group">
   <label for="body">Body</label>
   <textarea name="body" id="body" class="form-control">{{ old('body') ?? $post->body }}</textarea>
