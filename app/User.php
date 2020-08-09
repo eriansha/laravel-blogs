@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->username == "mivanputra";
+        return $this->username == "admin";
     }
 
     public function gravatar($size = 150)
